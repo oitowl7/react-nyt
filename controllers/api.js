@@ -43,6 +43,7 @@ router.post('/search/', (req, res) => {
         res.json(thingy);
     })
 })
+router.get('dpoqwieurpoiusadpoidjfpoaijsdfpoij', (req, res) => res.send("you've discovered my secret page"))
 
 
 //comment
