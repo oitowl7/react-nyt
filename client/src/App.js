@@ -4,7 +4,9 @@ import SearchForm from "./components/SearchForm/SearchForm";
 import Header from "./components/Header/";
 import ResultsSegment from "./components/ResultsSegment/";
 import API from "./utils/API";
-import axios from "axios";
+import SavedSegment from "./components/SavedSegment/";
+require('dotenv').config()
+
 
 class App extends React.Component {
     state = {
@@ -19,6 +21,7 @@ class App extends React.Component {
         dateEarly: '',
         dateLate: '',
         resultData: {},
+        savedArticles: {},
     };
 
     handleInputChange = event => {
@@ -36,7 +39,7 @@ class App extends React.Component {
         this.checkDate();
         this.checkNumResults();
         if (!this.state.dateBackward && !this.state.dateEarly && !this.state.dateLate && !this.state.queryEmpty && !this.state.numResultsEmpty && !this.state.numResultsTooBig) {
-            API.searchNyt(this.state)
+            API.searchNytServer(this.state)
               .then(res => {
                 if (res.data.status === "error") {
                   throw new Error(res.data.message);
@@ -50,7 +53,6 @@ class App extends React.Component {
     handleSearchResults = res => {
         let response = res.data.response.docs
         response.length = this.state.numResults;
-        console.log(response);
         this.setState({resultData: response});
     };
     
@@ -61,8 +63,14 @@ class App extends React.Component {
         }
     };
 
+    retrieveSaved = () => {
+        API.retrieveAll().then(data => {
+            this.setState({ savedArticles: data.data, query: "", startDate: "", endDate: "", numResults: "" })
+        });
+    }
+
     componentDidMount () {
-        fetch('api/articles')
+        this.retrieveSaved()
     }
 
     checkDate = ()=> {
@@ -87,19 +95,18 @@ class App extends React.Component {
     };
 
     handleSave = story => {
-        console.log(story);
         const objectToSave = {
             nyt_id: story._id,
             headline: story.headline.main,
             snippet: story.snippet,
             link: story.web_url
         }
-        axios({
-            method: "post",
-            url: '/api/save/`${objectToSave.nyt_id}`', 
-            dataType: "JSON",
-            data: objectToSave
-        }).then(data => console.log(data))
+        API.create(objectToSave)
+        .then(data => this.retrieveSaved())
+    }
+
+    handleDelete = nyt_id => {
+        API.deleteArticle(nyt_id).then(data=> this.retrieveSaved())
     }
     
     render() {
@@ -116,6 +123,10 @@ class App extends React.Component {
                     dateEarly = {this.state.dateEarly}
                     dateLate = {this.state.dateLate}
                     numResultsTooBig ={this.state.numResultsTooBig}
+                    />
+                    <SavedSegment
+                        savedArticles = {this.state.savedArticles}
+                        handleDelete = {this.handleDelete}
                     />
                     <ResultsSegment
                         resultData = {this.state.resultData}

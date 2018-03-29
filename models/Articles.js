@@ -5,18 +5,18 @@ var ArticleSchema = new Schema({
     nyt_id: {
         type: String,
         unique: "This thingy is already in here",
-        required: true
+        // required: true
     },
     headline: {
         type: String,
-        required: true
+        // required: true
     },
     snippet: {
         type: String
     },
     link: {
         type: String,
-        required: true
+        // required: true
     }
 });
 var Articles = mongoose.model("Articles", ArticleSchema);
