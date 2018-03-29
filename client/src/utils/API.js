@@ -32,7 +32,7 @@ export default {
         return axios.get(searchURL);
     },
     retrieve: function(query) {
-
+        
     },
     create: function(query) {
 

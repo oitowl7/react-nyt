@@ -8,6 +8,7 @@ const PORT = 5000;
 const app = express();
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 // Use express.static to serve the public folder as a static directory
 const router = express.Router();
 

@@ -4,6 +4,7 @@ import SearchForm from "./components/SearchForm/SearchForm";
 import Header from "./components/Header/";
 import ResultsSegment from "./components/ResultsSegment/";
 import API from "./utils/API";
+import axios from "axios";
 
 class App extends React.Component {
     state = {
@@ -27,6 +28,7 @@ class App extends React.Component {
           [name]: value
         });
       };
+      
     handleFormSubmit = event => {
         event.preventDefault();
         this.setState({dateBackward: '', dateEarly: '', dateLate: '', queryEmpty: '', numResultsEmpty: '', numResultsTooBig: ''})
@@ -88,15 +90,16 @@ class App extends React.Component {
         console.log(story);
         const objectToSave = {
             nyt_id: story._id,
-            headline: story.headline,
+            headline: story.headline.main,
             snippet: story.snippet,
-            link: story.link
+            link: story.web_url
         }
-        // db.SavedArticles.create(objectToSave)
-        //     .catch(err=>{
-        //         console.log(err.errmsg);
-        //     })
-        // console.log(x.dataName);
+        axios({
+            method: "post",
+            url: '/api/save/`${objectToSave.nyt_id}`', 
+            dataType: "JSON",
+            data: objectToSave
+        }).then(data => console.log(data))
     }
     
     render() {

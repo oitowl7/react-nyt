@@ -3,8 +3,6 @@ import "./ResultsSegment.css";
 import { Segment, Container, Header, Button, Grid, Icon } from 'semantic-ui-react';
 
 const ResultsSegment = (props) => {
-    console.log(props.resultData);
-
     if (props.resultData.length) {
         return(
             <Container style={{margin: 20}}>
