@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const path = require("path");
 const db = require("./models");
 const PORT = process.env.PORT || 5000;
 require('dotenv').config()
@@ -13,6 +14,8 @@ app.use(bodyParser.json())
 // Use express.static to serve the public folder as a static directory
 const router = express.Router();
 
+app.use(express.static("client/build"));
+
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
 //   useMongoClient: true
@@ -24,7 +27,9 @@ if (process.env.MONGODB_URI){
 }
 
 //Routes
-app.use(require('./controllers'))
+app.use(require('./controllers'));
+
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, "client/build/index.html")));
 
 
 // Start the server

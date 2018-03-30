@@ -1,11 +1,10 @@
 import axios from "axios";
 //get rid of this on deployment
-import keys from "../keys.js"
+// import keys from "../keys.js"
 
-const authKey = keys.nyt;
+// const authKey = keys.nyt;
 
-const queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" +
-  authKey;
+const queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=46dbd7b690f34bad8709b270648f8dea";
   
 
 
