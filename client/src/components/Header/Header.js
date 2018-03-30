@@ -12,7 +12,7 @@ const ContainerExampleFluid = () => (
                 <Icon name='newspaper' size="massive" />
                 Your Dream Come True
                 <Header.Subheader style={{color: "white"}}>
-                <p>If your dream is to search and annotate the New York Times</p>
+                <p>If your dream is to search and save New York Times stories. Kind of a lame dream to be honest</p>
                 </Header.Subheader>
             </Header>
         </Container>
