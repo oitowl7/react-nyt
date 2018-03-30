@@ -15,10 +15,13 @@ const router = express.Router();
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/react-searcher", {
 //   useMongoClient: true
-});
+mongoose.Promise = Promise;
+if (process.env.MONGODB_URI){
+    mongoose.connect(process.env.MONGODB_URI);
+} else {
+    mongoose.connect("mongodb://localhost/react-searcher");
+}
 
 //Routes
 app.use(require('./controllers'))
