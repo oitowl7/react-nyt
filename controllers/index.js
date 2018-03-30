@@ -4,10 +4,10 @@ const db = require("../models");
 const mongoose = require("mongoose");
 
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/react-searcher", {
+// mongoose.Promise = Promise;
+// mongoose.connect("mongodb://localhost/react-searcher", {
 //   useMongoClient: true
-});
+// });
 
 router.use('/api', require('./api.js'));
 
